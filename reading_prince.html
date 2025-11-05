@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Comprehension: Prince Mohammed Bin Salman</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #2D3E50 0%, #3D4E60 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .slide-container {
+            width: 100%;
+            max-width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #2D3E50 0%, #3D4E60 100%);
+            display: flex;
+            flex-direction: column;
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .accent-shape {
+            position: absolute;
+            opacity: 0.15;
+        }
+        
+        .accent-rect-1 {
+            width: 140px;
+            height: 80px;
+            background: #8B9AAA;
+            top: 40px;
+            left: 50px;
+            transform: rotate(-15deg);
+        }
+        
+        .accent-circle {
+            width: 130px;
+            height: 130px;
+            background: #00D2FF;
+            border-radius: 50%;
+            bottom: 80px;
+            right: 50px;
+        }
+        
+        .header {
+            position: relative;
+            z-index: 5;
+            margin-bottom: 15px;
+        }
+        
+        .main-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 8px;
+        }
+        
+        .instruction {
+            font-size: 14px;
+            font-weight: 400;
+            color: #FFFFFF;
+            background: rgba(0, 210, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .score-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            color: #2D3436;
+            z-index: 100;
+        }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 5;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow: hidden;
+        }
+        
+        .passage-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-left: 6px solid #8B9AAA;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-y: auto;
+            flex: 0 0 35%;
+        }
+        
+        .passage-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #2D3436;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .passage-text {
+            font-size: 18px;
+            line-height: 2;
+            color: #2D3436;
+            text-align: left;
+            word-spacing: 0.1em;
+        }
+        
+        .questions-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .quiz-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-left: 6px solid #8B9AAA;
+            padding: 16px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .question-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2D3436;
+            line-height: 1.4;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .option-btn {
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #00D2FF 0%, #00B8E6 100%);
+            color: #FFFFFF;
+            border: 2px solid #00D2FF;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        
+        .option-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #00B8E6 0%, #0099CC 100%);
+            border-color: #0099CC;
+        }
+        
+        .option-btn.correct {
+            background: linear-gradient(135deg, #00D100 0%, #00AA00 100%) !important;
+            border-color: #00AA00 !important;
+            color: #FFFFFF !important;
+        }
+        
+        .option-btn.incorrect {
+            background: linear-gradient(135deg, #FF4444 0%, #CC0000 100%) !important;
+            border-color: #CC0000 !important;
+            color: #FFFFFF !important;
+        }
+        
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+        
+        .feedback {
+            font-size: 13px;
+            font-weight: 700;
+            padding: 8px 10px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+        }
+        
+        .feedback.correct {
+            background: #E8F5E9;
+            color: #2E7D32;
+            border: 2px solid #4CAF50;
+        }
+        
+        .feedback.incorrect {
+            background: #FFEBEE;
+            color: #C62828;
+            border: 2px solid #F44336;
+        }
+        
+        .passage-box::-webkit-scrollbar,
+        .questions-box::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .passage-box::-webkit-scrollbar-track,
+        .questions-box::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+        .passage-box::-webkit-scrollbar-thumb,
+        .questions-box::-webkit-scrollbar-thumb {
+            background: #8B9AAA;
+            border-radius: 10px;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #2D3436;
+            border: 2px solid #8B9AAA;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            z-index: 100;
+        }
+        
+        .back-btn:hover {
+            background: #8B9AAA;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="accent-shape accent-rect-1"></div>
+        <div class="accent-shape accent-circle"></div>
+        
+        <a href="index.html" class="back-btn">← Back</a>
+        <div class="score-display">Score: <span id="score">0</span>/5</div>
+        
+        <div class="header">
+            <h1 class="main-title">Reading Comprehension: Prince Mohammed Bin Salman</h1>
+            <div class="instruction">Read the passage then choose True or False</div>
+        </div>
+        
+        <div class="content-wrapper">
+            <div class="passage-box">
+                <div class="passage-title">The Passage</div>
+                <div class="passage-text">
+                    Prince Mohammed bin Salman Al Saud is the Crown Prince of Saudi Arabia. He was born on August 31, 1985, in Riyadh, Saudi Arabia. He is the son of King Salman bin Abdulaziz Al Saud. Prince Mohammed bin Salman became the Deputy Crown Prince in 2015 and was appointed as the Minister of Defense in 2015 as well. In 2017, he became the Crown Prince of Saudi Arabia. He is one of the most powerful and influential figures in the Middle East. Prince Mohammed bin Salman has implemented many reforms in Saudi Arabia, including opening the country to tourism and allowing women to drive. He has also been involved in various international business ventures and has played a significant role in Saudi Arabia's Vision 2030 project, which aims to diversify the economy and reduce the country's dependence on oil. Prince Mohammed bin Salman is known for his ambitious plans to modernize Saudi Arabia and transform it into a global economic powerhouse.
+                </div>
+            </div>
+            
+            <div class="questions-box">
+                <div class="quiz-item">
+                    <div class="question-text">1. Prince Mohammed was born in 1985.</div>
+                    <div class="options">
+                        <button class="option-btn" onclick="checkAnswer(this, true)">True</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">False</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                
+                <div class="quiz-item">
+                    <div class="question-text">2. Prince Mohammed became Minister of Defense in 2015.</div>
+                    <div class="options">
+                        <button class="option-btn" onclick="checkAnswer(this, true)">True</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">False</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                
+                <div class="quiz-item">
+                    <div class="question-text">3. Prince Mohammed became Crown Prince in 2015.</div>
+                    <div class="options">
+                        <button class="option-btn" onclick="checkAnswer(this, false)">True</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true)">False</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                
+                <div class="quiz-item">
+                    <div class="question-text">4. Prince Mohammed has allowed women to drive in Saudi Arabia.</div>
+                    <div class="options">
+                        <button class="option-btn" onclick="checkAnswer(this, true)">True</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">False</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                
+                <div class="quiz-item">
+                    <div class="question-text">5. Vision 2030 aims to increase dependence on oil.</div>
+                    <div class="options">
+                        <button class="option-btn" onclick="checkAnswer(this, false)">True</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true)">False</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let score = 0;
+        
+        function checkAnswer(button, isCorrect) {
+            const item = button.closest('.quiz-item');
+            const feedback = item.querySelector('.feedback');
+            const buttons = item.querySelectorAll('.option-btn');
+            
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (isCorrect) {
+                button.classList.add('correct');
+                feedback.classList.add('show', 'correct');
+                feedback.textContent = '✓ Correct!';
+                score++;
+                playCorrectSound();
+            } else {
+                button.classList.add('incorrect');
+                buttons.forEach(btn => {
+                    if (btn.onclick.toString().includes('true')) {
+                        btn.classList.add('correct');
+                    }
+                });
+                feedback.classList.add('show', 'incorrect');
+                feedback.textContent = '✗ Incorrect!';
+                playIncorrectSound();
+            }
+            
+            document.getElementById('score').textContent = score;
+        }
+        
+        function playCorrectSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const now = audioContext.currentTime;
+            
+            for (let i = 0; i < 3; i++) {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.frequency.setValueAtTime(800 + (i * 200), now + (i * 0.1));
+                gain.gain.setValueAtTime(0.2, now + (i * 0.1));
+                gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.1) + 0.1);
+                
+                osc.start(now + (i * 0.1));
+                osc.stop(now + (i * 0.1) + 0.1);
+            }
+        }
+        
+        function playIncorrectSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const now = audioContext.currentTime;
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+            
+            osc.frequency.setValueAtTime(600, now);
+            osc.frequency.exponentialRampToValueAtTime(300, now + 0.2);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+            
+            osc.start(now);
+            osc.stop(now + 0.2);
+        }
+    </script>
+</body>
+</html>

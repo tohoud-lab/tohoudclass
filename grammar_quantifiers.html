@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocabulary Quiz: Definitions</title>
+    <title>Grammar Quiz: Quantifiers</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -34,265 +34,169 @@
             overflow: hidden;
         }
         
-        .accent-shape {
-            position: absolute;
-            opacity: 0.15;
-        }
-        
-        .accent-rect-1 {
-            width: 140px;
-            height: 80px;
-            background: #8B9AAA;
-            top: 40px;
-            left: 50px;
-            transform: rotate(-15deg);
-        }
-        
-        .accent-circle {
-            width: 130px;
-            height: 130px;
-            background: #00D2FF;
-            border-radius: 50%;
-            bottom: 80px;
-            right: 50px;
-        }
-        
-        .header {
-            position: relative;
-            z-index: 5;
-            margin-bottom: 20px;
-        }
-        
-        .main-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: #FFFFFF;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 8px;
-        }
-        
-        .instruction {
-            font-size: 16px;
-            font-weight: 400;
-            color: #FFFFFF;
-            background: rgba(0, 210, 255, 0.3);
-            padding: 8px 16px;
-            border-radius: 20px;
-            display: inline-block;
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #F5F1ED;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            color: #2D3E50;
+            z-index: 100;
         }
         
         .score-display {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.95);
+            background: #F5F1ED;
             padding: 12px 20px;
             border-radius: 8px;
             font-weight: 700;
-            color: #2D3436;
+            color: #2D3E50;
             z-index: 100;
         }
         
-        .quiz-content {
-            position: relative;
-            z-index: 5;
+        .title {
+            text-align: center;
+            color: #F5F1ED;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #8B9AAA;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .questions-container {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .question-box {
+            background: #F5F1ED;
+            border-left: 6px solid #8B9AAA;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2D3E50;
+            margin-bottom: 15px;
+        }
+        
+        .options-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            overflow-y: auto;
-            padding-right: 12px;
-            padding-bottom: 20px;
+            gap: 12px;
         }
         
-        .quiz-item {
-            background: rgba(255, 255, 255, 0.95);
-            border-left: 6px solid #8B9AAA;
-            padding: 14px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .word {
-            font-size: 18px;
-            font-weight: 800;
-            color: #00D2FF;
-            text-transform: uppercase;
-        }
-        
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        
-        .option-btn {
-            padding: 8px 12px;
-            background: linear-gradient(135deg, #00D2FF 0%, #00B8E6 100%);
-            color: #FFFFFF;
-            border: 2px solid #00D2FF;
+        .option-button {
+            background: #8B9AAA;
+            color: #F5F1ED;
+            border: none;
+            padding: 12px;
             border-radius: 6px;
-            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            text-align: left;
+            transition: all 0.3s ease;
+            font-size: 13px;
         }
         
-        .option-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, #00B8E6 0%, #0099CC 100%);
-            border-color: #0099CC;
+        .option-button:hover:not(:disabled) {
+            background: #7A8A9A;
+            transform: translateY(-2px);
         }
         
-        .option-btn.correct {
-            background: linear-gradient(135deg, #00D100 0%, #00AA00 100%) !important;
-            border-color: #00AA00 !important;
-            color: #FFFFFF !important;
+        .option-button:disabled {
+            opacity: 0.7;
         }
         
-        .option-btn.incorrect {
-            background: linear-gradient(135deg, #FF4444 0%, #CC0000 100%) !important;
-            border-color: #CC0000 !important;
-            color: #FFFFFF !important;
+        .option-button.correct {
+            background: #4CAF50;
         }
         
-        .option-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.9;
+        .option-button.incorrect {
+            background: #f44336;
         }
         
         .feedback {
-            font-size: 12px;
-            font-weight: 700;
-            padding: 6px 8px;
-            border-radius: 4px;
             text-align: center;
-            display: none;
-        }
-        
-        .feedback.show {
-            display: block;
+            font-weight: 600;
+            margin-top: 10px;
+            font-size: 14px;
+            min-height: 20px;
         }
         
         .feedback.correct {
-            background: #E8F5E9;
-            color: #2E7D32;
-            border: 2px solid #4CAF50;
+            color: #4CAF50;
         }
         
         .feedback.incorrect {
-            background: #FFEBEE;
-            color: #C62828;
-            border: 2px solid #F44336;
-        }
-        
-        .quiz-content::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .quiz-content::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-        }
-        
-        .quiz-content::-webkit-scrollbar-thumb {
-            background: #8B9AAA;
-            border-radius: 10px;
-        }
-        
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.95);
-            color: #2D3436;
-            border: 2px solid #8B9AAA;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            z-index: 100;
-        }
-        
-        .back-btn:hover {
-            background: #8B9AAA;
-            color: #FFFFFF;
+            color: #f44336;
         }
     </style>
 </head>
 <body>
+    <a href="index.html" class="back-button">← Back</a>
+    <div class="score-display">Score: <span id="score">0</span>/4</div>
+    
     <div class="slide-container">
-        <div class="accent-shape accent-rect-1"></div>
-        <div class="accent-shape accent-circle"></div>
+        <h1 class="title">Grammar: Quantifiers</h1>
+        <p class="subtitle">Choose the correct quantifier to complete each sentence</p>
         
-        <a href="index.html" class="back-btn">← Back</a>
-        <div class="score-display">Score: <span id="score">0</span>/6</div>
-        
-        <div class="header">
-            <h1 class="main-title">Vocabulary Quiz: Definitions</h1>
-            <div class="instruction">Match each word with its correct definition</div>
-        </div>
-        
-        <div class="quiz-content">
-            <div class="quiz-item">
-                <div class="word">Gym</div>
-                <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A library where you read books</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">A place to exercise and work out</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A restaurant where you eat food</button>
+        <div class="questions-container">
+            <!-- Question 1 -->
+            <div class="question-box">
+                <div class="question-text">1. _____ of the students passed the exam.</div>
+                <div class="options-container">
+                    <button class="option-button" onclick="checkAnswer(this, true)">All</button>
+                    <button class="option-button" onclick="checkAnswer(this, false)">Neither</button>
                 </div>
                 <div class="feedback"></div>
             </div>
             
-            <div class="quiz-item">
-                <div class="word">Herbal Tea</div>
-                <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A cold drink with ice</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">A beverage made from herbs and plants</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A type of coffee</button>
+            <!-- Question 2 -->
+            <div class="question-box">
+                <div class="question-text">2. _____ of them wanted to go to the party.</div>
+                <div class="options-container">
+                    <button class="option-button" onclick="checkAnswer(this, false)">Both</button>
+                    <button class="option-button" onclick="checkAnswer(this, true)">Neither</button>
                 </div>
                 <div class="feedback"></div>
             </div>
             
-            <div class="quiz-item">
-                <div class="word">Sudoku</div>
-                <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A type of Japanese food</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">A number puzzle game</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A martial art</button>
+            <!-- Question 3 -->
+            <div class="question-box">
+                <div class="question-text">3. _____ of my friends like pizza and ice cream.</div>
+                <div class="options-container">
+                    <button class="option-button" onclick="checkAnswer(this, true)">Both</button>
+                    <button class="option-button" onclick="checkAnswer(this, false)">All</button>
                 </div>
                 <div class="feedback"></div>
             </div>
             
-            <div class="quiz-item">
-                <div class="word">Cell Phone</div>
-                <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A type of prison</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">A portable device for communication</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A computer</button>
-                </div>
-                <div class="feedback"></div>
-            </div>
-            
-            <div class="quiz-item">
-                <div class="word">Artist</div>
-                <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A person who plays sports</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">A person who creates art</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A person who teaches school</button>
-                </div>
-                <div class="feedback"></div>
-            </div>
-            
-            <div class="quiz-item">
-                <div class="word">Donate</div>
-                <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">To take something away</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">To give something to help others</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">To sell something</button>
+            <!-- Question 4 -->
+            <div class="question-box">
+                <div class="question-text">4. _____ of the options are correct.</div>
+                <div class="options-container">
+                    <button class="option-button" onclick="checkAnswer(this, false)">Both</button>
+                    <button class="option-button" onclick="checkAnswer(this, true)">None</button>
                 </div>
                 <div class="feedback"></div>
             </div>
@@ -303,28 +207,28 @@
         let score = 0;
         
         function checkAnswer(button, isCorrect) {
-            const item = button.closest('.quiz-item');
-            const feedback = item.querySelector('.feedback');
-            const buttons = item.querySelectorAll('.option-btn');
+            const questionBox = button.closest('.question-box');
+            const buttons = questionBox.querySelectorAll('.option-button');
+            const feedback = questionBox.querySelector('.feedback');
             
             buttons.forEach(btn => btn.disabled = true);
             
             if (isCorrect) {
                 button.classList.add('correct');
-                feedback.classList.add('show', 'correct');
                 feedback.textContent = '✓ Correct!';
+                feedback.classList.add('correct');
                 score++;
                 playCorrectSound();
             } else {
                 button.classList.add('incorrect');
+                feedback.textContent = '✗ Incorrect!';
+                feedback.classList.add('incorrect');
+                playIncorrectSound();
                 buttons.forEach(btn => {
-                    if (btn.onclick.toString().includes('true')) {
+                    if (btn !== button && !btn.classList.contains('incorrect')) {
                         btn.classList.add('correct');
                     }
                 });
-                feedback.classList.add('show', 'incorrect');
-                feedback.textContent = '✗ Incorrect!';
-                playIncorrectSound();
             }
             
             document.getElementById('score').textContent = score;
@@ -332,39 +236,36 @@
         
         function playCorrectSound() {
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const now = audioContext.currentTime;
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
             
-            for (let i = 0; i < 3; i++) {
-                const osc = audioContext.createOscillator();
-                const gain = audioContext.createGain();
-                osc.connect(gain);
-                gain.connect(audioContext.destination);
-                
-                osc.frequency.setValueAtTime(800 + (i * 200), now + (i * 0.1));
-                gain.gain.setValueAtTime(0.2, now + (i * 0.1));
-                gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.1) + 0.1);
-                
-                osc.start(now + (i * 0.1));
-                osc.stop(now + (i * 0.1) + 0.1);
-            }
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
         }
         
         function playIncorrectSound() {
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const now = audioContext.currentTime;
-            const osc = audioContext.createOscillator();
-            const gain = audioContext.createGain();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
             
-            osc.connect(gain);
-            gain.connect(audioContext.destination);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
             
-            osc.frequency.setValueAtTime(600, now);
-            osc.frequency.exponentialRampToValueAtTime(300, now + 0.2);
-            gain.gain.setValueAtTime(0.2, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+            oscillator.frequency.value = 300;
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
             
-            osc.start(now);
-            osc.stop(now + 0.2);
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
         }
     </script>
 </body>

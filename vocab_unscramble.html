@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocabulary Quiz: Definitions</title>
+    <title>Vocabulary Quiz: Unscramble the Word</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -51,7 +51,7 @@
         .accent-circle {
             width: 130px;
             height: 130px;
-            background: #00D2FF;
+            background: #FF6B6B;
             border-radius: 50%;
             bottom: 80px;
             right: 50px;
@@ -75,7 +75,7 @@
             font-size: 16px;
             font-weight: 400;
             color: #FFFFFF;
-            background: rgba(0, 210, 255, 0.3);
+            background: rgba(255, 107, 107, 0.3);
             padding: 8px 16px;
             border-radius: 20px;
             display: inline-block;
@@ -107,7 +107,7 @@
         
         .quiz-item {
             background: rgba(255, 255, 255, 0.95);
-            border-left: 6px solid #8B9AAA;
+            border-left: 6px solid #FF6B6B;
             padding: 14px;
             border-radius: 8px;
             display: flex;
@@ -115,11 +115,12 @@
             gap: 10px;
         }
         
-        .word {
+        .scrambled {
             font-size: 18px;
             font-weight: 800;
-            color: #00D2FF;
+            color: #FF6B6B;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
         
         .options {
@@ -130,9 +131,9 @@
         
         .option-btn {
             padding: 8px 12px;
-            background: linear-gradient(135deg, #00D2FF 0%, #00B8E6 100%);
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF5252 100%);
             color: #FFFFFF;
-            border: 2px solid #00D2FF;
+            border: 2px solid #FF6B6B;
             border-radius: 6px;
             font-size: 12px;
             font-weight: 600;
@@ -142,8 +143,8 @@
         }
         
         .option-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, #00B8E6 0%, #0099CC 100%);
-            border-color: #0099CC;
+            background: linear-gradient(135deg, #FF5252 0%, #FF3838 100%);
+            border-color: #FF3838;
         }
         
         .option-btn.correct {
@@ -232,67 +233,67 @@
         <div class="score-display">Score: <span id="score">0</span>/6</div>
         
         <div class="header">
-            <h1 class="main-title">Vocabulary Quiz: Definitions</h1>
-            <div class="instruction">Match each word with its correct definition</div>
+            <h1 class="main-title">Vocabulary Quiz: Unscramble the Word</h1>
+            <div class="instruction">Unscramble the letters to form the correct word</div>
         </div>
         
         <div class="quiz-content">
             <div class="quiz-item">
-                <div class="word">Gym</div>
+                <div class="scrambled">MGYG</div>
                 <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A library where you read books</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">A place to exercise and work out</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A restaurant where you eat food</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Game</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true)">Gym</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Gem</button>
                 </div>
                 <div class="feedback"></div>
             </div>
             
             <div class="quiz-item">
-                <div class="word">Herbal Tea</div>
+                <div class="scrambled">AETL</div>
                 <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A cold drink with ice</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">A beverage made from herbs and plants</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A type of coffee</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Late</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true)">Eat</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Tale</button>
                 </div>
                 <div class="feedback"></div>
             </div>
             
             <div class="quiz-item">
-                <div class="word">Sudoku</div>
+                <div class="scrambled">KOOB</div>
                 <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A type of Japanese food</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">A number puzzle game</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A martial art</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true)">Book</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Boot</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Look</button>
                 </div>
                 <div class="feedback"></div>
             </div>
             
             <div class="quiz-item">
-                <div class="word">Cell Phone</div>
+                <div class="scrambled">SMUCI</div>
                 <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A type of prison</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">A portable device for communication</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A computer</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Misc</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true)">Music</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Mucus</button>
                 </div>
                 <div class="feedback"></div>
             </div>
             
             <div class="quiz-item">
-                <div class="word">Artist</div>
+                <div class="scrambled">ZZIAP</div>
                 <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A person who plays sports</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">A person who creates art</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">A person who teaches school</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true)">Pizza</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Pizaz</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Pazza</button>
                 </div>
                 <div class="feedback"></div>
             </div>
             
             <div class="quiz-item">
-                <div class="word">Donate</div>
+                <div class="scrambled">TRAC</div>
                 <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, false)">To take something away</button>
-                    <button class="option-btn" onclick="checkAnswer(this, true)">To give something to help others</button>
-                    <button class="option-btn" onclick="checkAnswer(this, false)">To sell something</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Cart</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true)">Car</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false)">Tract</button>
                 </div>
                 <div class="feedback"></div>
             </div>
